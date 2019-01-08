@@ -4,20 +4,30 @@ background-image: url("http://backgrounds4k.net/wp-content/uploads/2016/02/Mars-
 background-size:cover;
 display: flex;
 justify-content: center;
-
-}
-
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
-    monospace;
 }
 
 h1{
-  font-weight: bold;
-  font-family: fantasy;
+ font-family: 'Nasalization Free', arial;
 }
+
+img{
+  height: 100px;
+  width: 100px;
+}
+
+.image{
+  display: flex;
+  justify-content: center;
+}
+
+
+
 #start{
   margin-left: 2%;
+}
+
+.birthday{
+  color: white;
 }
 
 #submit{
