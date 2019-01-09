@@ -6,6 +6,5 @@ import Form2 from './radiocheckbox.js'
 // import * as serviceWorker from './serviceWorker';
 
 ReactDOM.render( <div>
-  < Form / >
-  < Form2 />
+  < Form2 / >
   </div>, document.getElementById('root'));

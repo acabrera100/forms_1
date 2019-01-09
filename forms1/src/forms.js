@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import "./index.css";
+import Form2 from "./radiocheckbox.js";
 let countries = require("./countries.json");
 
 class Form extends Component {
@@ -11,8 +12,10 @@ class Form extends Component {
       diet: "",
       exploreQuestion: "",
       country: "",
+      breathe:"",
       formSubmitted: false,
-      message: ""
+      message: "",
+
     };
     this.handleChange = this.handleChange.bind(this);
   }
@@ -36,9 +39,9 @@ class Form extends Component {
 
   handleSubmit = e => {
     e.preventDefault();
-    const { message, name, email, diet, exploreQuestion, country } = this.state;
+    const { message, name, email, diet, exploreQuestion, country,breathe } = this.state;
 
-    if (name && email && diet && exploreQuestion && country) {
+    if (name && email && diet && exploreQuestion && country && breathe) {
       this.setState({
         completed: true,
         message: (
@@ -48,6 +51,7 @@ class Form extends Component {
             <p>You diet consists of {diet}</p>
             <p>You wan to go to mars because...{exploreQuestion}</p>
             <p>You originate from {country}</p>
+            <p> You can breathe underwater {breathe} </p>
             <button onClick={this.handleSubmitted}>Submit</button>
           </div>
         )
@@ -148,7 +152,6 @@ class Form extends Component {
                 id="exploreQuestion"
               />
             </div>
-
             <button onClick={this.handleSubmit}>Submit</button>
             {this.state.message}
           </form>
