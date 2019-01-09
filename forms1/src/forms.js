@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import "./index.css";
 let countries = require("./countries.json");
 
 class Form extends Component {
@@ -7,27 +8,55 @@ class Form extends Component {
     this.state = {
       name: "",
       email: "",
-      favorite: "",
-      why: "",
+      diet: "",
+      exploreQuestion: "",
       country: "",
-      formSubmitted: false
+      formSubmitted: false,
+      message: ""
     };
     this.handleChange = this.handleChange.bind(this);
-    // this.handleChangeEmail = this.handleChangeEmail.bind(this);
   }
 
   populate = () => {
     return countries.map(country => (
-      <option value={country.name}> {country.name} </option>
+      <option key={country.name} value={country.name}>
+        {" "}
+        {country.name}{" "}
+      </option>
     ));
   };
 
-  checkForm = () => {
-    // let {email, favorite, why, country, formSubmitted}= this.state;
-    //
-    // if(!email=== undefined && !favorite === undefined && ) {
-    //
-    // }
+  handleSubmitted = e => {
+    e.preventDefault();
+    const { formSubmitted, message } = this.state;
+    this.setState({
+      formSubmitted: true
+    });
+  };
+
+  handleSubmit = e => {
+    e.preventDefault();
+    const { message, name, email, diet, exploreQuestion, country } = this.state;
+
+    if (name && email && diet && exploreQuestion && country) {
+      this.setState({
+        completed: true,
+        message: (
+          <div>
+            <p>You name is {name}</p>
+            <p>Your email is {email}</p>
+            <p>You diet consists of {diet}</p>
+            <p>You wan to go to mars because...{exploreQuestion}</p>
+            <p>You originate from {country}</p>
+            <button onClick={this.handleSubmitted}>Submit</button>
+          </div>
+        )
+      });
+    } else {
+      this.setState({
+        message: "Please complete the form."
+      });
+    }
   };
 
   handleChange(event) {
@@ -38,18 +67,12 @@ class Form extends Component {
     console.log(this.state);
     return (
       <>
-        <div class = 'image'>
-          <img className="nasa" src={"https://seeklogo.com/images/N/NASA-logo-9411797223-seeklogo.com.png"} alt =""/>
-        </div>
-
-        <div class="form">
-          <h1> Mission to Mars Registration Form </h1>
-
+        <h1> Mission to Mars Registration Form </h1>
+        {this.state.formSubmitted ? (
+          <p>Thank You for your Application, please begin your celibacy now</p>
+        ) : (
           <form onChange={this.handleChange}>
-            <label class="text" htmlFor="name">
-              {" "}
-              What is your name ?{" "}
-            </label>
+            <label htmlFor="name"> What is your name? </label>
 
             <input
               onChange={this.handleChange}
@@ -59,30 +82,20 @@ class Form extends Component {
               value={this.state.name}
               id="name"
             />
-            <br />
-            <br />
 
-            <label class="text" htmlFor="birthday">
-              {" "}
-              What is your date of birth ?{" "}
-            </label>
+            <br />
+            <label htmlFor="birthday"> What is your date of birth ? </label>
 
             <input
               type="date"
               id="start"
-              name="trip-start"
+              name="dob"
               min="1900-01-01"
               max="2019-01-07"
             />
 
             <br />
-            <br />
-
-            <label class="text" htmlFor="email">
-              {" "}
-              Email{" "}
-            </label>
-
+            <label htmlFor="email"> Email </label>
             <input
               onChange={this.handleChange}
               type="text"
@@ -92,55 +105,54 @@ class Form extends Component {
               id="email"
             />
 
-            <select id="favorite" name="favorite" value={this.state.favorite}>
-              <option value="omnivore"> Omnivore </option>
-              <option value="vegetarian"> Vegetarian </option>
-              <option value="vegan"> Vegan </option>
-            </select>
-
             <br />
             <br />
 
-            <div id="country">
-              <label class="text" htmlFor="country">
-                {" "}
-                What is your country of origin?
-              </label>
-
+            <div id="food">
+              <label htmlFor="food">Choose a Food type</label>
               <select
-                placeholder="Select Country"
-                name="country"
-                value={this.state.country}
-                id="country"
+                onChange={this.handleChange}
+                name="diet"
+                value={this.state.diet}
               >
-                {this.populate()}
+                <option value="omnivore"> Omnivore </option>
+                <option value="vegetarian"> Vegetarian </option>
+                <option value="vegan"> Vegan </option>
               </select>
             </div>
 
             <br />
 
-            <div id="whytext">
-              <label class="text" htmlFor="why">
+            <div id="country">
+              <label htmlFor="country"> What is your country of origin?</label>
+              <select
+                onChange={this.handleChange}
+                placeholder="Select Country"
+                name="country"
+                value={this.state.country}
+              >
+                {this.populate()}
+              </select>
+            </div>
+
+            <div id="exploreQuestiontext">
+              <label htmlFor="exploreQuestion">
                 Why do you want to be a Mars explorer?
               </label>
               <input
                 onChange={this.handleChange}
                 type="text"
-                placeholder="Enter Text Here"
-                name="why"
-                value={this.state.why}
-                id="why"
+                placeholder="Why doe"
+                name="exploreQuestion"
+                value={this.state.exploreQuestion}
+                id="exploreQuestion"
               />
             </div>
+
+            <button onClick={this.handleSubmit}>Submit</button>
+            {this.state.message}
           </form>
-
-          <br />
-
-          <div id="submit">
-            <button>Submit</button>
-          </div>
-
-        </div>
+        )}
       </>
     );
   }
